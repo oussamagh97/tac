@@ -2,7 +2,11 @@
 
 import sys
 import nltk
-from nltk.corpus import stopwords
+try:
+    from nltk.corpus import stopwords
+except LookupError:
+    nltk.download('stopwords')
+    from nltk.corpus import stopwords
 
 sw = stopwords.words("french")
 sw += ["les", "plus", "cette", "fait", "faire", "être", "deux", "comme", "dont", "tout",
@@ -39,6 +43,7 @@ def filtering(year):
             w) > 2 and w.isalpha() and w.lower() not in sw]
         kept_string = " ".join(kept)
         output.write(kept_string)
+    return f'Output has been written in {output_path}!'
 
 
 if __name__ == '__main__':
